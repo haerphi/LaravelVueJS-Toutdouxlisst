@@ -10,22 +10,6 @@
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form-group">
-            <label>todo Body:</label>
-            <textarea class="form-control" v-model="todo.body" rows="5"></textarea>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form-group">
-            <label>todo status:</label>
-            <input type="text" class="form-control" v-model="todo.statut" />
-          </div>
-        </div>
-      </div>
       <br />
       <div class="form-group">
         <button class="btn btn-primary">Update</button>

@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Todo extends Model
+class Task extends Model
 {
     protected $fillable = [
-        'idUser', 'title'
+        'idTodo', 'title', 'status'
     ];
 }

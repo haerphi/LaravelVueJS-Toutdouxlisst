@@ -14,23 +14,6 @@
                 </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label>Description:</label>
-                  <textarea class="form-control" v-model="todo.body" rows="5"></textarea>
-                </div>
-              </div>
-            </div>
-            <br />
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label>statut:</label>
-                  <input type="text" class="form-control" v-model="todo.statut" />
-                </div>
-              </div>
-            </div>
             <br />
             <div class="form-group">
               <button class="btn btn-primary">Create</button>

@@ -14,7 +14,6 @@
       <div class="card-body">
         <h2 class="card-title">{{ todo.title }}</h2>
         <h6 class="card-subtitle mb-2 text-muted">Id: {{ todo.id }}</h6>
-        <p class="card-text">Description : {{ todo.body }}</p>
         <router-link :to="{name: 'edittodo', params: { id: todo.id }}" class="btn btn-primary">Edit</router-link>
         <button class="btn btn-danger" @click.prevent="deleteTodo(todo.id)">Delete</button>
       </div>

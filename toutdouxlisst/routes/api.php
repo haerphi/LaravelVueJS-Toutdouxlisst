@@ -31,3 +31,12 @@ Route::get('/todos/{idUser}', 'TodoController@index');
 Route::get('/todo/edit/{id}', 'TodoController@edit');
 //route to update a todo
 Route::post('/todo/update/{id}', 'TodoController@update');
+
+//route to get all task from a todo
+Route::get('/tassk/{idTodo}', 'TaskController@index');
+//route to store a task
+Route::post('/task/store', 'TaskController@store');
+//route to update a task
+Route::post('/task/update/{id}', 'TaskController@update');
+//route to delete a task
+Route::delete('/task/delete/{id}', 'TaskController@delete');

@@ -3,24 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Todo;
-use App\Http\Resources\todoCollection;
+use App\Http\Resources\Collection;
 use Illuminate\Http\Request;
 
 class TodoController extends Controller
 {
     public function index($id)
     {
-        // return new TodoCollection(Todo::all());
-        return new TodoCollection(Todo::where('idUser', $id)->get());
+        // return new Collection(Todo::all());
+        return new Collection(Todo::where('idUser', $id)->get());
     }
 
     public function store(Request $request)
     {
         $todo = new Todo([
             'idUser' => $request->get('idUser'),
-            'title' => $request->get('title'),
-            'body' => $request->get('body'),
-            'statut' => $request->get('statut'),
+            'title' => $request->get('title')
         ]);
 
         $todo->save();
