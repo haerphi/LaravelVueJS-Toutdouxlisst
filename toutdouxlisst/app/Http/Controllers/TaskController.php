@@ -11,7 +11,7 @@ class TaskController extends Controller
     public function index($id)
     {
         // return new Collection(Task::all());
-        return new Collection(Task::where('idTask', $id)->get());
+        return new Collection(Task::where('idTodo', $id)->get());
     }
 
     public function store(Request $request)

@@ -3722,11 +3722,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      todo: {}
+      todo: {},
+      tasks: []
     };
   },
   created: function created() {
@@ -3735,6 +3745,11 @@ __webpack_require__.r(__webpack_exports__);
     var uri = "/api/todo/edit/".concat(this.$route.params.id);
     this.axios.get(uri).then(function (response) {
       _this.todo = response.data;
+    });
+    uri = "/api/tasks/".concat(this.$route.params.id); //insert here the id user from the local storage;
+
+    this.axios.get(uri).then(function (response) {
+      _this.tasks = response.data.data;
     });
   },
   methods: {
@@ -3748,6 +3763,24 @@ __webpack_require__.r(__webpack_exports__);
         });
 
         console.log(response);
+      });
+    },
+    deleteTask: function deleteTask(id) {
+      var _this3 = this;
+
+      var uri = "/api/task/delete/".concat(id);
+      this.axios["delete"](uri).then(function (response) {
+        //suppresion du todo dans l'affiache ACTUEL (sans recharger)
+        for (var i = 0; i < _this3.tasks.length; i++) {
+          if (_this3.tasks[i].id == id) {
+            _this3.tasks.splice(i, 1);
+          }
+        }
+      });
+    },
+    editTask: function editTask(id) {
+      document.querySelectorAll(".task").forEach(function (task) {
+        console.log(task);
       });
     }
   }
@@ -61236,56 +61269,110 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("h1", [_vm._v("Edit Todo")]),
-    _vm._v(" "),
-    _c(
-      "form",
-      {
-        on: {
-          submit: function($event) {
-            $event.preventDefault()
-            return _vm.updateTodo($event)
+  return _c(
+    "div",
+    [
+      _c("h1", [_vm._v("Edit Todo")]),
+      _vm._v(" "),
+      _c(
+        "form",
+        {
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.updateTodo($event)
+            }
           }
-        }
-      },
-      [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-md-6" }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", [_vm._v("todo Title:")]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.todo.title,
-                    expression: "todo.title"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { type: "text" },
-                domProps: { value: _vm.todo.title },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+        },
+        [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-6" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", [_vm._v("todo Title:")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.todo.title,
+                      expression: "todo.title"
                     }
-                    _vm.$set(_vm.todo, "title", $event.target.value)
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.todo.title },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.todo, "title", $event.target.value)
+                    }
                   }
-                }
-              })
-            ])
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _vm._m(0)
           ])
-        ]),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _vm._m(0)
-      ]
-    )
-  ])
+        ]
+      ),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(" "),
+      _vm._l(_vm.tasks, function(task) {
+        return _c(
+          "div",
+          {
+            key: task.id,
+            staticClass: "card",
+            staticStyle: { width: "18rem" }
+          },
+          [
+            _c("div", { staticClass: "card-body task" }, [
+              _c("h2", { staticClass: "card-title" }, [
+                _vm._v(_vm._s(task.title))
+              ]),
+              _vm._v(" "),
+              _c("h6", { staticClass: "card-subtitle mb-2 text-muted" }, [
+                _vm._v("Id: " + _vm._s(task.id))
+              ]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.editTask(task.id)
+                    }
+                  }
+                },
+                [_vm._v("Edit")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-danger",
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.deleteTask(task.id)
+                    }
+                  }
+                },
+                [_vm._v("Delete")]
+              )
+            ])
+          ]
+        )
+      })
+    ],
+    2
+  )
 }
 var staticRenderFns = [
   function() {
@@ -76720,14 +76807,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!************************************************************!*\
   !*** ./resources/js/components/todo/EditTodoComponent.vue ***!
   \************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _EditTodoComponent_vue_vue_type_template_id_1b9415cf___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EditTodoComponent.vue?vue&type=template&id=1b9415cf& */ "./resources/js/components/todo/EditTodoComponent.vue?vue&type=template&id=1b9415cf&");
 /* harmony import */ var _EditTodoComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EditTodoComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/todo/EditTodoComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _EditTodoComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _EditTodoComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -76757,7 +76845,7 @@ component.options.__file = "resources/js/components/todo/EditTodoComponent.vue"
 /*!*************************************************************************************!*\
   !*** ./resources/js/components/todo/EditTodoComponent.vue?vue&type=script&lang=js& ***!
   \*************************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

@@ -33,7 +33,7 @@ Route::get('/todo/edit/{id}', 'TodoController@edit');
 Route::post('/todo/update/{id}', 'TodoController@update');
 
 //route to get all task from a todo
-Route::get('/tassk/{idTodo}', 'TaskController@index');
+Route::get('/tasks/{idTodo}', 'TaskController@index');
 //route to store a task
 Route::post('/task/store', 'TaskController@store');
 //route to update a task
