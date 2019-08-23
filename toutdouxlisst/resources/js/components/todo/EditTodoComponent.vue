@@ -27,6 +27,7 @@
         <button class="btn btn-danger" @click.prevent="deleteTask(task.id)">Delete</button>
       </div>
     </div>
+    <router-link :to="{name:'createtask'}" class="btn btn-primary">+</router-link>
   </div>
 </template>
 

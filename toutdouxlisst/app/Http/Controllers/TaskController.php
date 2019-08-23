@@ -17,7 +17,7 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         $task = new Task([
-            'idTodo' => $request->get('idStore'),
+            'idTodo' => $request->get('idTodo'),
             'title' => $request->get('title'),
             'status' => $request->get('status')
         ]);

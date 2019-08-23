@@ -21,6 +21,7 @@ import Register from './components/login/registerComponent.vue';
 import TodoList from './components/todo/TodoListComponent.vue';
 import CreateTodo from './components/todo/CreateTodoComponent.vue';
 import EditTodo from './components/todo/EditTodoComponent.vue';
+import CreateTaskComponent from './components/todo/CreateTaskComponent.vue';
 
 const routes = [{
         name: 'home',
@@ -54,6 +55,11 @@ const routes = [{
         name: 'edittodo',
         path: '/todoEdit/:id',
         component: EditTodo
+    },
+    {
+        name: 'createtask',
+        path: '/createtask/:id',
+        component: CreateTaskComponent
     }
 ];
 

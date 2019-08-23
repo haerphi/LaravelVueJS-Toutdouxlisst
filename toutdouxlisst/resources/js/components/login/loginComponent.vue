@@ -7,7 +7,7 @@
       <div class="row">
         <div class="col-md-6">
           <div class="form-group">
-            <label>Username:</label>
+            <label>Email:</label>
             <input type="text" class="form-control" v-model="user.email" />
             <label>password:</label>
             <input type="text" class="form-control" v-model="user.password" />
