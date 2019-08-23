@@ -33,7 +33,12 @@ export default {
     login() {
       let uri = "/api/auth/login"; //insert here the id user from the local storage;
       this.axios.post(uri, this.user).then(response => {
-        console.log(response.data[0]);
+        let user = JSON.parse(response.headers.userinfo)[0];
+        let token = response.headers.authorization;
+        console.log(user);
+        console.log(token);
+        localStorage.setItem("iduser", user.id);
+        localStorage.setItem("token", token);
       });
     }
   }

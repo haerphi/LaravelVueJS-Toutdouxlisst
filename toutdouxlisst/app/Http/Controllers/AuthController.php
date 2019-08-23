@@ -27,6 +27,7 @@ class AuthController extends Controller
         }
 
         $user = new User;
+        $user->name = $request->name;
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
         $user->save();
@@ -36,17 +37,11 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        /* test */
-        $credentials = User::where('email', $request->get('email'))->get();
-        return response()->json($credentials);
-
-
-
-
         $credentials = $request->only('email', 'password');
-        
+
         if ($token = $this->guard()->attempt($credentials)) {
-            return response()->json(['status' => 'success'], 200)->header('Authorization', $token);
+            $secondCredentials = User::where('email', $request->get('email'))->get(['id','email']); // this line get all the field frome the line that match the email
+            return response()->json(['status' => 'success'], 200)->header('Authorization', $token)->header('UserInfo',$secondCredentials);
         }
 
         return response()->json(['error' => 'login_error','request' => $request], 401);

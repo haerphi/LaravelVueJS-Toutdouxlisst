@@ -29,8 +29,13 @@
 import { log } from "util";
 export default {
   data() {
+    let id = "-1";
+    if (localStorage.getItem("iduser") != null) {
+      console.log(localStorage.getItem("iduser"));
+      id = localStorage.getItem("iduser");
+    }
     return {
-      todo: { idUser: 0 } //Inset here the user id from the local storage
+      todo: { idUser: id } //Inset here the user id from the local storage
     };
   },
   methods: {

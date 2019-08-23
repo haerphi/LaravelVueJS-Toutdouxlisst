@@ -3678,7 +3678,12 @@ __webpack_require__.r(__webpack_exports__);
       var uri = "/api/auth/login"; //insert here the id user from the local storage;
 
       this.axios.post(uri, this.user).then(function (response) {
-        console.log(response.data[0]);
+        var user = JSON.parse(response.headers.userinfo)[0];
+        var token = response.headers.authorization;
+        console.log(user);
+        console.log(token);
+        localStorage.setItem("iduser", user.id);
+        localStorage.setItem("token", token);
       });
     }
   }
@@ -3723,6 +3728,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -3730,7 +3737,15 @@ __webpack_require__.r(__webpack_exports__);
       user: {}
     };
   },
-  methods: {}
+  methods: {
+    register: function register() {
+      var uri = "/api/auth/register"; //insert here the id user from the local storage;
+
+      this.axios.post(uri, this.user).then(function (response) {
+        console.log(response);
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -3776,9 +3791,16 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
+    var id = "-1";
+
+    if (localStorage.getItem("iduser") != null) {
+      console.log(localStorage.getItem("iduser"));
+      id = localStorage.getItem("iduser");
+    }
+
     return {
       todo: {
-        idUser: 0 //Inset here the user id from the local storage
+        idUser: id //Inset here the user id from the local storage
 
       }
     };
@@ -3945,7 +3967,14 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
-    var uri = "/api/todos/0"; //insert here the id user from the local storage;
+    var id = "-1";
+
+    if (localStorage.getItem("iduser") != null) {
+      console.log(localStorage.getItem("iduser"));
+      id = localStorage.getItem("iduser");
+    }
+
+    var uri = "/api/todos/" + id; //insert here the id user from the local storage;
 
     this.axios.get(uri).then(function (response) {
       _this.todos = response.data.data;
@@ -61453,67 +61482,95 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.user.title,
-                    expression: "user.title"
+                    value: _vm.user.name,
+                    expression: "user.name"
                   }
                 ],
                 staticClass: "form-control",
                 attrs: { type: "text" },
-                domProps: { value: _vm.user.title },
+                domProps: { value: _vm.user.name },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.$set(_vm.user, "title", $event.target.value)
+                    _vm.$set(_vm.user, "name", $event.target.value)
                   }
                 }
               }),
               _vm._v(" "),
-              _c("label", [_vm._v("Username:")]),
+              _c("label", [_vm._v("Email:")]),
               _vm._v(" "),
               _c("input", {
                 directives: [
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.user.title,
-                    expression: "user.title"
+                    value: _vm.user.email,
+                    expression: "user.email"
                   }
                 ],
                 staticClass: "form-control",
                 attrs: { type: "text" },
-                domProps: { value: _vm.user.title },
+                domProps: { value: _vm.user.email },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.$set(_vm.user, "title", $event.target.value)
+                    _vm.$set(_vm.user, "email", $event.target.value)
                   }
                 }
               }),
               _vm._v(" "),
-              _c("label", [_vm._v("Username:")]),
+              _c("label", [_vm._v("Password:")]),
               _vm._v(" "),
               _c("input", {
                 directives: [
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.user.title,
-                    expression: "user.title"
+                    value: _vm.user.password,
+                    expression: "user.password"
                   }
                 ],
                 staticClass: "form-control",
                 attrs: { type: "text" },
-                domProps: { value: _vm.user.title },
+                domProps: { value: _vm.user.password },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.$set(_vm.user, "title", $event.target.value)
+                    _vm.$set(_vm.user, "password", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", [_vm._v("Password confirme:")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.user.password_confirmation,
+                    expression: "user.password_confirmation"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.user.password_confirmation },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.user,
+                      "password_confirmation",
+                      $event.target.value
+                    )
                   }
                 }
               })

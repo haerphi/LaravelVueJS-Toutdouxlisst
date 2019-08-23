@@ -29,7 +29,12 @@ export default {
     };
   },
   created() {
-    let uri = "/api/todos/0"; //insert here the id user from the local storage;
+    let id = "-1";
+    if (localStorage.getItem("iduser") != null) {
+      console.log(localStorage.getItem("iduser"));
+      id = localStorage.getItem("iduser");
+    }
+    let uri = "/api/todos/" + id; //insert here the id user from the local storage;
     this.axios.get(uri).then(response => {
       this.todos = response.data.data;
     });

@@ -8,11 +8,13 @@
         <div class="col-md-6">
           <div class="form-group">
             <label>Username:</label>
-            <input type="text" class="form-control" v-model="user.title" />
-            <label>Username:</label>
-            <input type="text" class="form-control" v-model="user.title" />
-            <label>Username:</label>
-            <input type="text" class="form-control" v-model="user.title" />
+            <input type="text" class="form-control" v-model="user.name" />
+            <label>Email:</label>
+            <input type="text" class="form-control" v-model="user.email" />
+            <label>Password:</label>
+            <input type="text" class="form-control" v-model="user.password" />
+            <label>Password confirme:</label>
+            <input type="text" class="form-control" v-model="user.password_confirmation" />
           </div>
         </div>
       </div>
@@ -32,6 +34,13 @@ export default {
       user: {}
     };
   },
-  methods: {}
+  methods: {
+    register() {
+      let uri = "/api/auth/register"; //insert here the id user from the local storage;
+      this.axios.post(uri, this.user).then(response => {
+        console.log(response);
+      });
+    }
+  }
 };
 </script>
