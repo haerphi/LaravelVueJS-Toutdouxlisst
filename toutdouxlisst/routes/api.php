@@ -13,14 +13,34 @@ use Illuminate\Http\Request;
 |
 */
 
+/*----- login ----- */
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/user/register', 'UserController@register');
+Route::prefix('auth')->group(function () {
+    Route::post('register', 'AuthController@register');
+    Route::post('login', 'AuthController@login');
+    Route::get('refresh', 'AuthController@refresh');
+
+    Route::group(['middleware' => 'auth:api'], function(){
+        Route::get('user', 'AuthController@user');
+        Route::post('logout', 'AuthController@logout');
+    });
+});
+
+Route::group(['middleware' => 'auth:api'], function(){
+    // Users
+    Route::get('users', 'UserController@index')->middleware('isAdmin');
+    Route::get('users/{id}', 'UserController@show')->middleware('isAdminOrSelf');
+});
 
 
 
+
+
+
+/* ------ TODO ------ */
 //route to store a todo
 Route::post('/todo/store', 'TodoController@store');
 //route to delete a todo by his id
@@ -32,6 +52,7 @@ Route::get('/todo/edit/{id}', 'TodoController@edit');
 //route to update a todo
 Route::post('/todo/update/{id}', 'TodoController@update');
 
+/* ------ TASK ----- */
 //route to get all task from a todo
 Route::get('/tasks/{idTodo}', 'TaskController@index');
 //route to store a task

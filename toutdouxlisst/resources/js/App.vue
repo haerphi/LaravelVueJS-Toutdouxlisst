@@ -19,6 +19,14 @@
           <li class="nav-item active">
             <router-link to="/" class="nav-link">Home</router-link>
           </li>
+          <!-- Login & register !-->
+          <li class="nav-item active">
+            <router-link to="/login" class="nav-link">Login</router-link>
+          </li>
+          <li class="nav-item active">
+            <router-link to="/register" class="nav-link">Register</router-link>
+          </li>
+          <!-- todo list !-->
           <li class="nav-item active">
             <router-link to="/todoList" class="nav-link">Todo list</router-link>
           </li>
