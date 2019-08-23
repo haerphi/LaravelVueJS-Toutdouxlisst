@@ -18,8 +18,11 @@
 
     <div class="card" style="width: 18rem;" v-for="task in tasks" :key="task.id">
       <div class="card-body task">
-        <h2 class="card-title">{{ task.title }}</h2>
-        <h6 class="card-subtitle mb-2 text-muted">Id: {{ task.id }}</h6>
+        <input type="text" class="form-control" v-model="task.title" />
+        <h6 class="card-subtitle mb-2 text-muted">
+          <label>Status:</label>
+          <input type="text" class="form-control" v-model="task.status" />
+        </h6>
         <button class="btn btn-primary" @click.prevent="editTask(task.id)">Edit</button>
         <button class="btn btn-danger" @click.prevent="deleteTask(task.id)">Delete</button>
       </div>
@@ -51,9 +54,20 @@ export default {
     updateTodo() {
       let uri = `/api/todo/update/${this.$route.params.id}`;
       this.axios.post(uri, this.todo).then(response => {
-        this.$router.push({ name: "todoList" });
-        console.log(response);
+        Console.log("Title mis à jour");
       });
+    },
+    editTask(id) {
+      let uri = `/api/task/update/${id}`;
+      console.log(this.tasks);
+      for (let i = 0; i < this.tasks.length; i++) {
+        //Trouver le bon id
+        if (id === this.tasks[i].id) {
+          this.axios.post(uri, this.tasks[i]).then(response => {
+            console.log("Task mise à jour");
+          });
+        }
+      }
     },
     deleteTask(id) {
       let uri = `/api/task/delete/${id}`;
@@ -64,11 +78,6 @@ export default {
             this.tasks.splice(i, 1);
           }
         }
-      });
-    },
-    editTask(id) {
-      document.querySelectorAll(".task").forEach(task => {
-        console.log(task);
       });
     }
   }
