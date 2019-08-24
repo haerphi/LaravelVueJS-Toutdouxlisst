@@ -6,3 +6,6 @@
 * composer i
 * npm i
 * php run artisan serve
+## Missing functionnalies
+* Edit the user profile
+* "private route"
