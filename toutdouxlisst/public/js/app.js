@@ -3597,7 +3597,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {};
+  },
+  methods: {
+    logout: function logout() {
+      var _this = this;
+
+      console.log("logout");
+      var uri = "/api/logout";
+      this.axios.get(uri).then(function (response) {
+        console.log(response);
+        localStorage.removeItem("iduser");
+        localStorage.removeItem("token");
+
+        _this.$router.push({
+          name: "login"
+        });
+      });
+    }
+  }
+});
 
 /***/ }),
 
@@ -3675,6 +3697,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     login: function login() {
+      var _this = this;
+
       var uri = "/api/auth/login"; //insert here the id user from the local storage;
 
       this.axios.post(uri, this.user).then(function (response) {
@@ -3684,6 +3708,10 @@ __webpack_require__.r(__webpack_exports__);
         console.log(token);
         localStorage.setItem("iduser", user.id);
         localStorage.setItem("token", token);
+
+        _this.$router.push({
+          name: "todoList"
+        });
       });
     }
   }
@@ -3739,10 +3767,14 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     register: function register() {
+      var _this = this;
+
       var uri = "/api/auth/register"; //insert here the id user from the local storage;
 
       this.axios.post(uri, this.user).then(function (response) {
-        console.log(response);
+        _this.$router.push({
+          name: "login"
+        });
       });
     }
   }
@@ -3788,10 +3820,18 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     create: function create() {
+      var _this = this;
+
       var uri = "../api/task/store";
       console.log(this.task);
-      this.axios.post(uri, this.task).then(function (response) {//sucess
-        //this.$router.push({ name: "edittodo/" + this.$route.params.id });
+      this.axios.post(uri, this.task).then(function (response) {
+        //sucess
+        _this.$router.push({
+          name: "edittodo",
+          params: {
+            id: _this.$route.params.id
+          }
+        });
       })["catch"](function (error) {
         console.log("POURQUééééé?!");
       });
@@ -3944,7 +3984,7 @@ __webpack_require__.r(__webpack_exports__);
     updateTodo: function updateTodo() {
       var uri = "/api/todo/update/".concat(this.$route.params.id);
       this.axios.post(uri, this.todo).then(function (response) {
-        Console.log("Title mis à jour");
+        console.log("Title mis à jour");
       });
     },
     editTask: function editTask(id) {
@@ -4024,6 +4064,10 @@ __webpack_require__.r(__webpack_exports__);
     if (localStorage.getItem("iduser") != null) {
       console.log(localStorage.getItem("iduser"));
       id = localStorage.getItem("iduser");
+    } else {
+      this.$router.push({
+        name: "login"
+      });
     }
 
     var uri = "/api/todos/" + id; //insert here the id user from the local storage;
@@ -61225,7 +61269,7 @@ var render = function() {
         { staticClass: "navbar navbar-expand-lg navbar-light bg-light" },
         [
           _c("a", { staticClass: "navbar-brand", attrs: { href: "#" } }, [
-            _vm._v("HelloPost")
+            _vm._v("Todo list app")
           ]),
           _vm._v(" "),
           _vm._m(0),
@@ -61279,25 +61323,35 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "li",
+                  {
+                    staticClass: "nav-item active",
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.logout()
+                      }
+                    }
+                  },
+                  [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "nav-link",
+                        attrs: { href: "javascript:void(0)" }
+                      },
+                      [_vm._v("Logout")]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "li",
                   { staticClass: "nav-item active" },
                   [
                     _c(
                       "router-link",
                       { staticClass: "nav-link", attrs: { to: "/todoList" } },
                       [_vm._v("Todo list")]
-                    )
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "li",
-                  { staticClass: "nav-item dropdown" },
-                  [
-                    _c(
-                      "router-link",
-                      { staticClass: "nav-link", attrs: { to: "/todoCreate" } },
-                      [_vm._v("create a Todo")]
                     )
                   ],
                   1

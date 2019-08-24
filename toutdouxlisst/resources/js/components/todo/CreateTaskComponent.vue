@@ -29,7 +29,10 @@ export default {
         .post(uri, this.task)
         .then(response => {
           //sucess
-          //this.$router.push({ name: "edittodo/" + this.$route.params.id });
+          this.$router.push({
+            name: "edittodo",
+            params: { id: this.$route.params.id }
+          });
         })
         .catch(error => {
           console.log("POURQUééééé?!");

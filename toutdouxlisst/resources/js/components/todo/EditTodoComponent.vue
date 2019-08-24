@@ -55,7 +55,7 @@ export default {
     updateTodo() {
       let uri = `/api/todo/update/${this.$route.params.id}`;
       this.axios.post(uri, this.todo).then(response => {
-        Console.log("Title mis à jour");
+        console.log("Title mis à jour");
       });
     },
     editTask(id) {

@@ -38,7 +38,9 @@ export default {
     register() {
       let uri = "/api/auth/register"; //insert here the id user from the local storage;
       this.axios.post(uri, this.user).then(response => {
-        console.log(response);
+        this.$router.push({
+          name: "login"
+        });
       });
     }
   }

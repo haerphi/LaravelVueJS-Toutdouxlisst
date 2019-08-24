@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">HelloPost</a>
+      <a class="navbar-brand" href="#">Todo list app</a>
       <button
         class="navbar-toggler"
         type="button"
@@ -26,12 +26,12 @@
           <li class="nav-item active">
             <router-link to="/register" class="nav-link">Register</router-link>
           </li>
+          <li class="nav-item active" @click.prevent="logout()">
+            <a href="javascript:void(0)" class="nav-link">Logout</a>
+          </li>
           <!-- todo list !-->
           <li class="nav-item active">
             <router-link to="/todoList" class="nav-link">Todo list</router-link>
-          </li>
-          <li class="nav-item dropdown">
-            <router-link to="/todoCreate" class="nav-link">create a Todo</router-link>
           </li>
         </ul>
       </div>
@@ -39,6 +39,25 @@
     <router-view></router-view>
   </div>
 </template>
+
 <script>
-export default {};
+export default {
+  data() {
+    return {};
+  },
+  methods: {
+    logout() {
+      console.log("logout");
+      let uri = `/api/logout`;
+      this.axios.get(uri).then(response => {
+        console.log(response);
+        localStorage.removeItem("iduser");
+        localStorage.removeItem("token");
+        this.$router.push({
+          name: "login"
+        });
+      });
+    }
+  }
+};
 </script>

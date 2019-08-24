@@ -33,6 +33,10 @@ export default {
     if (localStorage.getItem("iduser") != null) {
       console.log(localStorage.getItem("iduser"));
       id = localStorage.getItem("iduser");
+    } else {
+      this.$router.push({
+        name: "login"
+      });
     }
     let uri = "/api/todos/" + id; //insert here the id user from the local storage;
     this.axios.get(uri).then(response => {

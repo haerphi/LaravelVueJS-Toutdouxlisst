@@ -39,6 +39,9 @@ export default {
         console.log(token);
         localStorage.setItem("iduser", user.id);
         localStorage.setItem("token", token);
+        this.$router.push({
+          name: "todoList"
+        });
       });
     }
   }
